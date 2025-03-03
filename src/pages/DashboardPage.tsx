@@ -14,6 +14,7 @@ import {
   ChevronLeft,
   Menu,
   X,
+  LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DashboardGeneral } from "@/components/dashboard/DashboardGeneral";
@@ -21,11 +22,13 @@ import { DashboardMessages } from "@/components/dashboard/DashboardMessages";
 import { DashboardSettings } from "@/components/dashboard/DashboardSettings";
 import { DashboardUsers } from "@/components/dashboard/DashboardUsers";
 import { DashboardData } from "@/components/dashboard/DashboardData";
+import { useAuth } from "@/contexts/AuthContext";
 
 const DashboardPage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
   
   const isActive = (path: string) => {
     return location.pathname === path || location.pathname.startsWith(`${path}/`);
@@ -117,11 +120,25 @@ const DashboardPage = () => {
           />
         </nav>
         
-        <div className="p-4 border-t mt-auto">
+        <div className="p-4 border-t space-y-2">
+          {user && (
+            <div className="px-3 py-2 rounded-md text-sm font-medium text-muted-foreground">
+              <span className="block text-foreground">
+                {user.username}
+              </span>
+              <span className="text-xs">
+                Administrador
+              </span>
+            </div>
+          )}
+          <Button variant="outline" className="w-full justify-start" onClick={logout}>
+            <LogOut className="mr-2 h-4 w-4" />
+            Cerrar sesión
+          </Button>
           <Link to="/" onClick={closeSidebar}>
             <Button variant="outline" className="w-full justify-start">
               <Home className="mr-2 h-4 w-4" />
-              Back to Home
+              Volver al inicio
             </Button>
           </Link>
         </div>
@@ -133,6 +150,20 @@ const DashboardPage = () => {
         <header className="hidden md:flex items-center justify-between p-4 border-b bg-background/90 backdrop-blur-md sticky top-0 z-10">
           <h1 className="font-bold text-xl">Dashboard</h1>
           <div className="flex items-center gap-2">
+            {user && (
+              <div className="mr-4 text-sm">
+                <span className="font-medium">
+                  {user.username}
+                </span>
+                <span className="text-muted-foreground ml-2">
+                  (Administrador)
+                </span>
+              </div>
+            )}
+            <Button variant="outline" size="sm" onClick={logout}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Salir
+            </Button>
             <Link to="/chat">
               <Button variant="outline" size="sm">
                 <MessageSquare className="mr-2 h-4 w-4" />
