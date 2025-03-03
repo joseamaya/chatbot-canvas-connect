@@ -62,11 +62,11 @@ export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
       case 'text':
         return `Thanks for your message: "${userMessage}". This is a simulated response. In a real implementation, this would connect to an AI backend.`;
       case 'image':
-        return 'I've received your image. If I were connected to a vision model, I could analyze it for you.';
+        return "I've received your image. If I were connected to a vision model, I could analyze it for you.";
       case 'audio':
-        return 'I've received your audio message. With a proper backend, I could transcribe and respond to it.';
+        return "I've received your audio message. With a proper backend, I could transcribe and respond to it.";
       default:
-        return 'I received your message but I'm not sure how to process this type of content yet.';
+        return "I received your message but I'm not sure how to process this type of content yet.";
     }
   };
 
