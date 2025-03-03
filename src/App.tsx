@@ -20,6 +20,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 // Components
 import { MobileNavigation } from "./components/MobileNavigation";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { AdminRoute } from "./components/AdminRoute";
 
 const queryClient = new QueryClient();
 
@@ -37,13 +38,23 @@ const App = () => {
               <div className="relative min-h-screen">
                 <Routes>
                   <Route path="/" element={<LandingPage />} />
-                  <Route path="/chat" element={<ChatPage />} />
                   <Route path="/login" element={<LoginPage />} />
-                  <Route path="/dashboard/*" element={
-                    <ProtectedRoute>
-                      <DashboardPage />
-                    </ProtectedRoute>
-                  } />
+                  <Route 
+                    path="/chat" 
+                    element={
+                      <ProtectedRoute>
+                        <ChatPage />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route 
+                    path="/dashboard/*" 
+                    element={
+                      <AdminRoute>
+                        <DashboardPage />
+                      </AdminRoute>
+                    } 
+                  />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
                 <MobileNavigation isOpen={isNavOpen} setIsOpen={setIsNavOpen} />
